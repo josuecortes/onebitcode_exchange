@@ -1,7 +1,6 @@
 FROM ruby:2.3-slim
 # Instala as nossas dependencias
-RUN apt-get update && apt-get install -qq -y --no-install-recommends \
-      build-essential nodejs libpq-dev
+RUN apt-get update && apt-get install -qq -y --no-install-recommends build-essential nodejs libpq-dev
 # Seta nosso path
 ENV INSTALL_PATH /usr/src/app
 # Cria nosso diretório
@@ -15,4 +14,6 @@ RUN bundle install
 # Copia nosso código para dentro do container
 COPY . .
 # Roda nosso servidor
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# mudando do comando abaixo para o puma
+# CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD puma -C config/puma.rb
